@@ -31,3 +31,4 @@ id_rsa*
 inventory.ini
 k8s_inventory.ini
 terraform.tfvars
+.terraform.lock.hcl
