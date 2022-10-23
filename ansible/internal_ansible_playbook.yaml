@@ -1,0 +1,47 @@
+---
+- hosts: k8s_master
+  become: true
+  gather_facts: no
+  environment:
+    ANSIBLE_HOST_KEY_CHECKING: false
+  tasks:
+  - name: Installing Helm
+    shell: 
+      curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 &&
+      chmod 700 get_helm.sh &&
+      ./get_helm.sh
+  - name: Copying Ingress deployment
+    copy:
+     src: /home/ubuntu/ingress-controller-deploy.yaml
+     dest: /home/ubuntu/ingress-controller-deploy.yaml
+     owner: ubuntu
+  - name: Installing aptitude using apt
+    apt: name=aptitude state=latest update_cache=yes force_apt_get=yes
+  - name: Installing required system packages
+    apt: name={{ item }} state=latest update_cache=yes
+    loop: ['ca-certificates', 'curl', 'gnupg', 'python3-pip', 'git'] 
+  - name: Adding Docker GPG apt Key
+    apt_key:
+     url: https://download.docker.com/linux/ubuntu/gpg
+     state: present
+  - name: Adding Docker Repository
+    apt_repository:
+     repo: deb https://download.docker.com/linux/ubuntu focal stable
+     state: present
+  - name: Updating apt and installing docker
+    apt: name={{ item }} state=latest update_cache=yes
+    loop: ['docker-ce', 'docker-ce-cli', 'containerd.io', 'docker-compose-plugin', 'docker-compose'] 
+  - name: Installing GitLab-runner
+    shell: 
+     curl -L "https://packages.gitlab.com/install/repositories/runner/gitlab-runner/script.deb.sh" | bash && apt-get install gitlab-runner && usermod -aG docker gitlab-runner 
+  - name: Deploying ingress
+    command: kubectl apply -f /home/ubuntu/ingress-controller-deploy.yaml
+  - name: Creating a directory .kube
+    file:
+     path: /home/ubuntu/.kube
+     state: directory
+     mode: '0755'
+  - name: Copy admin config
+    command: cp -i /etc/kubernetes/admin.conf /home/ubuntu/.kube/config
+  - name: Set permissions
+    command: chown ubuntu:ubuntu /home/ubuntu/.kube/config
