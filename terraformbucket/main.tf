@@ -19,7 +19,7 @@ provider "yandex" {
 # Создаем сервисный аккаунт
 resource "yandex_iam_service_account" "sa" {
   folder_id = var.folder_id
-  name      = "sa-vladimir"
+  name      = var.service_account
 }
 
 # Даем права на запись для этого сервисного аккаунта

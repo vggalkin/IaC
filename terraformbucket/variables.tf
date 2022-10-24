@@ -16,3 +16,6 @@ variable "token" {
   description = "Yandex Token"
 }
 
+variable "service_account" {
+  description = "Your Service Account Name"
+}
