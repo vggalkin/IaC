@@ -9,6 +9,7 @@ cd terraformbucket
 touch terraform.tfvars
 ```
 Заполняем
+
 ![tfvars](https://user-images.githubusercontent.com/3630798/197512071-042196d5-44be-44ac-ad88-c3290cafc1d9.png)
 
 2. Инициализируем и применяем
@@ -37,6 +38,7 @@ terraform init -backend-config="access_key=<access_key>" -backend-config="secret
 terraform apply
 ```
 Итог: 3 виртуальные машины
+
 ![yandex_vms](https://user-images.githubusercontent.com/3630798/197519640-bdd15257-7afc-46d3-a93a-f0799ca51aa0.png)
 
 
