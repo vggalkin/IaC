@@ -33,7 +33,7 @@ resource "yandex_compute_instance" "vm" {
   }
 
   scheduling_policy {
-    preemptible = true
+    preemptible = false
   }
 
   metadata = {
