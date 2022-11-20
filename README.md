@@ -1,4 +1,4 @@
-# Спринт 1
+# Дипломный проект. Спринт 1
 ## Создание инфраструктуры и автоматизация установки компонентов
 
 ### Создание Service Account и Storage Bucket для хранения состояния
@@ -51,3 +51,5 @@ ansible-playbook -i ../inventory.ini -u ubuntu ansible_playbook.yml
 ```
 Итог: сконфигурированные ВМ с необходимыми компонентами
 ![ansible_playbook_result](https://user-images.githubusercontent.com/3630798/197524800-74d4580c-c399-4097-99ee-3ff85429787c.png)
+
+## [Спринт 2](https://github.com/vggalkin/django-pg-docker)
